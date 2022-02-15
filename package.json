@@ -1,6 +1,14 @@
 {
-  "name": "Auth_TDD-(NodeJS)",
+  "name": "Auth_TDD-NodeJS",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "sequelize": "^6.16.1",
+    "tedious": "^14.3.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
 }
