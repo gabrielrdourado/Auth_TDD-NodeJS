@@ -1,15 +1,30 @@
+const request = require("supertest");
+
 const { User } = require("../../src/app/models");
+const app = require("../../src/app");
+const truncate = require("../utils/truncate");
 
 describe("Authenticate", () => {
-  it("should sum two numbers", async () => {
-    const user = await User.create({
-      name: "Gabriel",
-      email: "gabriel@gmail.com",
-      password_hash: "abcdefghijklmnopqrstuvwxyz",
+  beforeAll(() => {
+    jest.setTimeout(90 * 1000);
+  });
+
+  beforeEach(async () => {
+    await truncate();
+  });
+
+  it("should authenticate with valid credentials", async () => {
+    const user = new User({
+      email: "user@example.com",
+      name: "user",
+      password_hash: "sdfsdfshf44511",
     });
 
-    console.log(user);
+    const response = await request(app).post("/sessions").send({
+      email: user.email,
+      password: "senha123",
+    });
 
-    expect(user.email).toBe("gabriel@gmail.com");
+    expect(response.status).toBe(200);
   });
 });
