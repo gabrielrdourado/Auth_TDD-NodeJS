@@ -1,8 +1,7 @@
 const request = require("supertest");
 
 const app = require("../../src/app");
-// const factory = require("../factories");
-const { User } = require("../../src/app/models");
+const factory = require("../factories");
 const truncate = require("../utils/truncate");
 
 describe("Authenticate", () => {
@@ -14,13 +13,6 @@ describe("Authenticate", () => {
     const user = await factory.create("User", {
       password: "123456",
     });
-    // const user = await User.create({
-    //   email: "user@example.com",
-    //   name: "John",
-    //   password: "123456",
-    // });
-
-    console.log(user);
 
     const response = await request(app).post("/sessions").send({
       email: user.email,
@@ -30,16 +22,16 @@ describe("Authenticate", () => {
     expect(response.status).toBe(200);
   });
 
-  // it("should not authenticate with invalid credentials", async () => {
-  //   const user = await factory.create("User", {
-  //     password: "123123",
-  //   });
+  it("should not authenticate with invalid credentials", async () => {
+    const user = await factory.create("User", {
+      password: "123123",
+    });
 
-  //   const response = await request(app).post("/sessions").send({
-  //     email: user.email,
-  //     password: "345345",
-  //   });
+    const response = await request(app).post("/sessions").send({
+      email: user.email,
+      password: "345345",
+    });
 
-  //   expect(response.status).toBe(401);
-  // });
+    expect(response.status).toBe(401);
+  });
 });
