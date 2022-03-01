@@ -1,12 +1,12 @@
 const { factory } = require("factory-girl");
-// const faker = require("faker");
+const { faker } = require("@faker-js/faker");
 
 const { User } = require("../src/app/models");
 
 factory.define("User", User, {
-  name: "user",
-  email: "user@example.com",
-  password: "123123",
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: faker.internet.password(),
 });
 
 module.exports = factory;
